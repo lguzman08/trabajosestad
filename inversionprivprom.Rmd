@@ -1,0 +1,102 @@
+Gasto privado privado en salud (PVT-D) como porcentaje del gasto actual en salud (CHE=current health expenditure) (%): La parte del gasto privado interno en salud del gasto total actual en salud indica cuánto es financiado internamente por el sector privado. Los fondos del sector privado provienen de hogares, corporaciones y organizaciones sin fines de lucro. Dichos gastos pueden ser prepagos para un seguro médico voluntario o pagarse directamente a los proveedores de atención médica. Este indicador describe el papel del sector privado en la financiación de la asistencia sanitaria en relación con fuentes públicas o externas
+SECTOR PRIVADO
+```{r}
+library(rio)
+data="https://github.com/lguzman08/trabajosestad/raw/master/africa.xlsx"
+invprivada=import(data)
+```
+```{r}
+dim(invprivada) #filas, columnas
+```
+
+```{r}
+tail(invprivada)
+```
+```{r}
+head(invprivada)
+```
+
+```{r}
+names(invprivada)
+```
+
+
+```{r}
+names(invprivada)=c("Pais","2015","2014","2013", "2012", "2011", "2010", "2009", "2008", "2007", "2006", "2005", "2004", "2003", "2002", "2001", "2000")
+```
+
+```{r}
+str(invprivada)
+```
+```{r}
+invprivada[,c(2:17)]=lapply(invprivada[,c(2:17)],as.numeric)
+```
+```{r}
+str(invprivada)
+```
+```{r}
+invprivada = invprivada[complete.cases(invprivada),]
+```
+
+```{r}
+invprivada
+```
+```{r}
+row.names(invprivada)=NULL
+```
+
+
+```{r}
+invprivada=invprivada[c(2,4,16,20,24,25,26,28,30,31,35,36,39,43,45,49,52,54,57,58,61,64,65,77,84,85,88,89,92,95,96,101,102,104,108,109,125,131,133,135,136,139,141,146,149,152,156,164),]
+```
+```{r}
+invprivada[,order(c(2:17))]
+```
+
+
+```{r}
+invprivada=invprivada[,c(1,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2)]
+```
+
+```{r}
+invprivada[,c(2,3,4,5,6,7,8,9)]=NULL
+```
+
+
+```{r}
+invprivada[invprivada$Pais=="Cameroon",'Pais']="Camerun"
+invprivada[invprivada$Pais=="Central African Republic",'Pais']="Republica Centroafricana"
+invprivada[invprivada$Pais=="Comoros",'Pais']="Comoras"
+invprivada[invprivada$Pais=="Côte d'Ivoire",'Pais']="Costa de Marfil"
+invprivada[invprivada$Pais=="Democratic Republic of the Congo",'Pais']="Republica Democratica de Congo"
+invprivada[invprivada$Pais=="Egypt",'Pais']="Egipto"
+invprivada[invprivada$Pais=="Djibouti",'Pais']="Yibuti"
+invprivada[invprivada$Pais=="Ethiopia",'Pais']="Etiopia"
+invprivada[invprivada$Pais=="Kenya",'Pais']="Kenia"
+invprivada[invprivada$Pais=="	Guinea-Bissau",'Pais']="Guinea Bisau"
+invprivada[invprivada$Pais=="Lesotho",'Pais']="Lesoto"
+invprivada[invprivada$Pais=="Malawi",'Pais']="Malaui"
+invprivada[invprivada$Pais=="Sao Tome and Principe",'Pais']="Santo Tome y Principe"
+invprivada[invprivada$Pais=="Sierra Leone",'Pais']="Sierra Leona"
+invprivada[invprivada$Pais=="	South Africa",'Pais']="Sudafrica"
+invprivada[invprivada$Pais=="United Republic of Tanzania",'Pais']="Tanzania"
+
+
+
+
+
+
+```
+
+```{r}
+row.names(invprivada)=NULL
+```
+
+
+
+
+```{r}
+invprivada$prom = rowMeans(invprivada[,2:9], na.rm = TRUE)
+```
+
+
